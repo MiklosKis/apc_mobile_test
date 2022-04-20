@@ -1,6 +1,5 @@
 package tests;
 
-import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +14,7 @@ public class ApiTests {
     @DisplayName("Verify Language List test")
     public void verifyLanguageList() {
         String uriLanguageList = "https://languagetool.org/api/v2/languages";
-        ValidatableResponse response = given().
+        given().
                 when().
                     get(uriLanguageList).
                 then().
@@ -28,7 +27,6 @@ public class ApiTests {
                         body("name[0]", equalTo("Arabic")).
                         body("code[0]", equalTo("ar")).
                         body("longCode[0]", equalTo("ar"));
-        response.log().body();
     }
 
     @Test
@@ -36,7 +34,7 @@ public class ApiTests {
     public void verifyLanguageCheckResponseCorrect() {
         String uriCheckText = "https://languagetool.org/api/v2/check";
         String testText = "Tset user is testing the API.";
-        ValidatableResponse response = given().
+        given().
                     contentType(CONTENTTYPE).
                         formParam("text", testText).
                         formParam("language", "en-US").
@@ -51,7 +49,6 @@ public class ApiTests {
                         body("matches[0].message", equalTo("Possible spelling mistake found.")).
                         body("matches[0].sentence", equalTo(testText)).
                         body("matches[0].rule.category.id", equalTo("TYPOS"));
-        response.log().body();
     }
 
     @Test
@@ -59,7 +56,7 @@ public class ApiTests {
     public void verifyWrongLanguageResponse400() {
         String uriCheckText = "https://languagetool.org/api/v2/check";
         String languageCode = "ne-SU";
-        ValidatableResponse response = given().
+        given().
                     contentType(CONTENTTYPE).
                         formParam("text", "Tset user is testing the API.").
                         formParam("language", languageCode).
@@ -67,8 +64,7 @@ public class ApiTests {
                     post(uriCheckText).
                 then().
                     assertThat().
-                        statusCode(400).
-                        body(startsWith("Error: '" + languageCode + "' is not a language code known to LanguageTool."));
-        response.log().body();
+                    statusCode(400).
+                    body(startsWith("Error: '" + languageCode + "' is not a language code known to LanguageTool."));
     }
 }
