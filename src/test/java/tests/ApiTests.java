@@ -8,6 +8,8 @@ import static org.hamcrest.Matchers.*;
 
 public class ApiTests {
 
+    private static final String CONTENTTYPE = "application/x-www-form-urlencoded";
+
     @Test
     public void verifyLanguageList() {
         String uriLanguageList = "https://languagetool.org/api/v2/languages";
@@ -32,7 +34,7 @@ public class ApiTests {
         String uriCheckText = "https://languagetool.org/api/v2/check";
         String testText = "Tset user is testing the API.";
         ValidatableResponse response = given().
-                    contentType("application/x-www-form-urlencoded").
+                    contentType(CONTENTTYPE).
                         formParam("text", testText).
                         formParam("language", "en-US").
                 when().
@@ -54,7 +56,7 @@ public class ApiTests {
         String uriCheckText = "https://languagetool.org/api/v2/check";
         String languageCode = "ne-SU";
         ValidatableResponse response = given().
-                    contentType("application/x-www-form-urlencoded").
+                    contentType(CONTENTTYPE).
                         formParam("text", "Tset user is testing the API.").
                         formParam("language", languageCode).
                 when().
