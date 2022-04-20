@@ -1,6 +1,7 @@
 package tests;
 
 import io.restassured.response.ValidatableResponse;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -11,6 +12,7 @@ public class ApiTests {
     private static final String CONTENTTYPE = "application/x-www-form-urlencoded";
 
     @Test
+    @DisplayName("Verify Language List test")
     public void verifyLanguageList() {
         String uriLanguageList = "https://languagetool.org/api/v2/languages";
         ValidatableResponse response = given().
@@ -30,6 +32,7 @@ public class ApiTests {
     }
 
     @Test
+    @DisplayName("Verify Language Check Response test")
     public void verifyLanguageCheckResponseCorrect() {
         String uriCheckText = "https://languagetool.org/api/v2/check";
         String testText = "Tset user is testing the API.";
@@ -52,6 +55,7 @@ public class ApiTests {
     }
 
     @Test
+    @DisplayName("Verify Wrong Language Response is 400")
     public void verifyWrongLanguageResponse400() {
         String uriCheckText = "https://languagetool.org/api/v2/check";
         String languageCode = "ne-SU";
